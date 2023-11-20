@@ -2,7 +2,7 @@ from django.shortcuts import render
 from typing import Any
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView  #conjunto de vistas genéricas que son implementaciones comunes de patrones de visualización. Estas vistas permiten realizar operaciones CRUD 
 from django.http import HttpRequest
-from .models import Cliente, Proveedor 
+from .models import Cliente, Proveedor, Pedido, DetallePedido
 from django.urls import reverse_lazy #Aca utilizamos reverse_lazy porque como estamos consultando en la BDD, solo la llamaremos cuando este todo listo cargado y validado. 
 
 # Create your views here.
@@ -13,7 +13,7 @@ class ClienteListView(ListView):
     model = Cliente  # Con model debo decirle cual es el modelo del que debo tomar los campos
     context_object_name = 'cliente'
     template_name = 'gerencia/cliente/cliente_listar.html' #Cual es la pagina donde lo va a mostrar o cargar
-    queryset = Cliente.objects.filter(baja = False)
+    queryset = Cliente.objects.filter(baja= False)
     ordering = ['apellido']
         # esta vista muestra una lista de clientes, inicialmente filtrados para excluir aquellos con baja igual a True, y permite realizar búsquedas adicionales por apellido mediante parámetros GET.
     def get(self, request: HttpRequest, *args:Any, **kwargs:Any):  #Este método se utiliza para manejar las solicitudes GET. En este caso, se está personalizando para filtrar la lista de clientes según el apellido proporcionado en los parámetros de la solicitud.
@@ -43,4 +43,10 @@ class ClienteDeleteView(DeleteView):
     success_url = reverse_lazy('gerencia/cliente/cliente_listar.html')
     
 
+class PedidoCreateView(CreateView):
+    model = Pedido
+    template_name = 'gerencia/pedido/pedido_crear.html'
+    fields = '__all__'
+    success_url = reverse_lazy()
+    
 #Falta terminar las vistas con la lógica de negocio

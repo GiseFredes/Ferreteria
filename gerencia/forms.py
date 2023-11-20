@@ -52,3 +52,11 @@ class ClienteForm(PersonaForm):
     class Meta(PersonaForm.Meta):
         model = Cliente
         fields = ['nombre', 'apellido', 'email', 'dni', 'telefono', 'direccion', 'baja_cliente']
+
+
+class PedidoForm(ClienteForm):
+    fields = ['id', 'fecha_pedido', 'cliente_id', 'direccion', 'total']
+
+
+class DetallePedidoForm(PedidoForm):
+    fields = ['producto_id', 'cantidad', 'subtotal']
