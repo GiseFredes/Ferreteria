@@ -22,8 +22,11 @@ class Proveedor(Persona):
     localidad = models.CharField(verbose_name="Localidad", max_length=250)
     baja_proveedor = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name_plural = 'Proveedores'
+        
     def __str__(self):
-        return f"{self.empresa} - {self.cuit} {self.telefono}"
+        return f"{self.empresa} - {self.cuit} - {self.telefono}"
     
     def soft_delete(self):
         self.baja_proveedor = True #Damos de baja un proveedor sin eliminar sus datos de la base de datos
@@ -40,10 +43,18 @@ class Cliente(Persona):
     #historial_pedido
     #notificacion   Como no se como manejarlas las pongo como idea
     #reseñas
+    def __str__(self):
+        return f"{self.nombre} - {self.apellido} - {self.dni} - {self.direccion}"
+    def soft_delete(self):
+        self.baja = True #Damos de baja un proveedor sin eliminar sus datos de la base de datos
+        super().save()
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=50, verbose_name='Categoria')
     baja = models.BooleanField(default=False) 
+
+    def __str__(self):
+        return f"{self.nombre}"
 
 
 class Producto(models.Model):
@@ -72,5 +83,7 @@ class DetallePedido(models.Model):
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
 
+    class Meta:
+        db_table = 'Detalle de Pedido'
     def __str__(self):
         return f'Detalle de Pedido #{self.pedido.id} - {self.producto.nombre}'

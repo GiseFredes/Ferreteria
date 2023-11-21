@@ -271,7 +271,7 @@ tr{
 td{
     border: 1px;
     padding: 2px;
-    width: 25%;
+    width: 50px;
 }
 
 .celda1{
@@ -440,3 +440,4 @@ Footer
     text-align: end;
     font-family: Calibri, cursive;
 }
+

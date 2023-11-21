@@ -2,8 +2,9 @@ from django.shortcuts import render
 from typing import Any
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView  #conjunto de vistas genéricas que son implementaciones comunes de patrones de visualización. Estas vistas permiten realizar operaciones CRUD 
 from django.http import HttpRequest
-from .models import Cliente, Proveedor 
+from .models import Cliente, Producto, Categoria
 from django.urls import reverse_lazy #Aca utilizamos reverse_lazy porque como estamos consultando en la BDD, solo la llamaremos cuando este todo listo cargado y validado. 
+from .forms import ProductoForm
 
 # Create your views here.
 def indexG(request):
@@ -11,7 +12,7 @@ def indexG(request):
 
 class ClienteListView(ListView):
     model = Cliente  # Con model debo decirle cual es el modelo del que debo tomar los campos
-    context_object_name = 'cliente'
+    context_object_name = 'clientes'
     template_name = 'gerencia/cliente/cliente_listar.html' #Cual es la pagina donde lo va a mostrar o cargar
     queryset = Cliente.objects.filter(baja = False)
     ordering = ['apellido']
@@ -21,9 +22,9 @@ class ClienteListView(ListView):
             self.queryset=self.queryset.filter(nombre__contains=request.GET['apellido'])
         return super().get(request, *args,**kwargs)  # se llama al método get de la clase base (super()) para realizar el procesamiento adicional necesario para obtener y renderizar la lista de objetos Cliente.
 
-class ClienteDetailView(DetailView):#Fijate que no hereda siempre igual, dependiendo la funcion que va a realizar es lo que necesit que herede
+class ClienteDetailView(DetailView):#Fijate que no hereda siempre igual, dependiendo la funcion que va a realizar es lo que necesito que herede
     model = Cliente
-    template_name = 'cliente_detalle.html'
+    template_name = 'gerencia/cliente/cliente_detalle.html'
 
 class ClienteCreateView(CreateView):
     model = Cliente
@@ -44,3 +45,49 @@ class ClienteDeleteView(DeleteView):
     
 
 #Falta terminar las vistas con la lógica de negocio
+
+
+class ProductoListView(ListView):
+    model = Producto
+    template_name = 'gerencia/productos/producto_index.html'
+    context_object_name = 'productos'
+
+class ProductoCreateView(CreateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = 'gerencia/productos/crear_producto.html'
+    success_url = reverse_lazy('producto_index')
+
+class ProductoUpdateView(UpdateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = 'gerencia/productos/editar_producto.html'
+    success_url = reverse_lazy('producto_index')
+
+class ProductoDeleteView(DeleteView):
+    model = Producto
+    template_name = 'gerencia/productos/eliminar_producto.html'
+    success_url = reverse_lazy('producto_index')
+
+
+class CategoriaCreateView(CreateView):
+    model = Categoria
+    template_name = 'gerencia/categoria/crear_categoria.html'
+    fields = ['nombre']
+    success_url = reverse_lazy('lista_categorias')
+
+class CategoriaListView(ListView):
+    model = Categoria
+    template_name = 'gerencia/categoria/lista_categorias.html'
+    context_object_name = 'categorias'
+    
+class CategoriaUpdateView(UpdateView):
+    model = Categoria
+    template_name = 'gerencia/categoria/actualizar_categoria.html'
+    fields = ['nombre']
+    success_url = reverse_lazy('lista_categorias')
+
+class CategoriaDeleteView(DeleteView):
+    model = Categoria
+    template_name = 'gerencia/categoria/eliminar_categoria.html'
+    success_url = reverse_lazy('lista_categorias')

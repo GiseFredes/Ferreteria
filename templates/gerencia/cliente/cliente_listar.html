@@ -1,23 +1,23 @@
 {% extends 'gerencia/baseG.html' %}
-
+{% load static %}
+{% block header %}Clientes{% endblock header %}
 {% block titulo %}Listado clientes{% endblock%}
-
-{% block contenido %}
+<style>
+    td {
+        width: 150px; 
+        padding: 5px; 
+    }
+</style>
+{% block content %}
 <h1 class="mt-4">Listado clientes</h1>
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="{% url 'indexGerencia' %}">Gerencia</a></li>
-    <li class="breadcrumb-item active">Listado cliente</li>
-</ol>
-
-
-<div class="card">
-    <div class="card-header">Carga cliente</div>
-    <div class="card-body">
-        <form action="{% url 'indexCliente' %}" method="post">
-            {% csrf_token %}
-            {% include 'gerencia/cliente/form.html' %}
-        </form>
-    </div>
-</div>
-<button><a href="cliente_nuevo.html"></a></button>
+{% for cliente in clientes %}
+<tr>
+    <td>{{ cliente.id }} &nbsp;&nbsp;  </td>
+    <td>{{ cliente.nombre }} </td>
+    <td>{{ cliente.apellido }} &nbsp;&nbsp; </td>
+    <td>&nbsp;&nbsp;<a href="{% url 'editarCliente' cliente.id %}" title="Editar" class="btn btn-warning">&nbsp;&nbsp; <i class="fas fa-pencil"></i></a></td>
+    <td>&nbsp;&nbsp;<a href="{% url 'eliminarCliente' cliente.id %}" title="Eliminar" class="btn btn-danger">&nbsp;&nbsp; <i class="fas fa-trash"></i></a></td>
+</tr>
+<br>
+{% endfor %}
 {% endblock %}
