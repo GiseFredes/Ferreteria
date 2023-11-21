@@ -1,0 +1,23 @@
+<!-- lista_pedidod.html -->
+{% extends 'gerencia/baseG.html' %}
+
+{% block content %}
+  <h2>Lista de Pedidos</h2>
+  
+  <ul>
+    {% for pedido in pedidos %}
+      <li>
+        {{ pedido.id }}
+        <a href="{% url 'actualizar_pedido' pedido.id %}" class="btn btn-warning">Editar</a>
+        <a href="{% url 'eliminar_pedido' pedido.id %}" class="btn btn-danger">Eliminar</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h2>Agregar Nueva Categoría</h2>
+  <form method="post" action="{% url 'crear_pedido' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar Pedido</button>
+  </form>
+{% endblock %}

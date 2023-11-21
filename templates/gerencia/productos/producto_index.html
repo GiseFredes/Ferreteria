@@ -1,0 +1,31 @@
+{% extends 'gerencia/baseG.html' %}
+{% block title %}-Productos {% endblock  %}
+{% block content %}
+  <h2>Lista de Productos</h2>
+  
+  <ul>
+    {% for producto in productos %}
+      <li>
+<<<<<<< HEAD
+        Articulo: {{ producto.articulo }} <br> Categoria:  {{ producto.categoria }} <br>
+        Precio: ${{ producto.precio }} <br> Marca: {{ producto.marca }} <br> Stock: {{producto.stock}} {% comment %} - Proveedor: {{producto.proveedor}}  {% endcomment %}<br> Descripcion: {{producto.descripcion}} <br><br>
+=======
+        {{ producto.articulo }} - {{ producto.categoria }} - Precio: ${{ producto.precio }} - Marca: {{ producto.marca }} - Stock: {{producto.stock}} - Proveedor: {{producto.proveedor}} - Descripcion: {{producto.descrpcion}}
+        {% if producto.imagen %}
+          <img src="{{ producto.imagen.url }}" alt="{{ producto.articulo }}">
+        {% endif %}
+>>>>>>> 46aeb735e65217ac475925479b9d4921a73ae81e
+        <a href="{% url 'editarProducto' producto.id %}" class="btn btn-warning">Editar</a>
+        <a href="{% url 'eliminarProducto' producto.id %}" class="btn btn-danger">Eliminar</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h2>Agregar Nuevo Producto</h2>
+  <form method="post" action="{% url 'crearProducto' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Producto Nuevo</button>
+  </form>
+{% endblock %}
+
