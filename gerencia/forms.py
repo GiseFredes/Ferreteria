@@ -56,7 +56,7 @@ class ClienteForm(PersonaForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ['articulo', 'categoria', 'precio', 'marca', 'stock', 'proveedor', 'descripcion']
+        fields = ['articulo', 'categoria', 'precio', 'marca', 'stock', 'proveedor', 'descripcion', 'imagen']
 
 class CategoriaForm(forms.ModelForm):
     class Meta:
