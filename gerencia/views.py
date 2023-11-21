@@ -55,8 +55,12 @@ class ProductoListView(ListView):
 class ProductoCreateView(CreateView):
     model = Producto
     form_class = ProductoForm
-    template_name = 'gerencia/productos/crear_producto.html'
+    template_name = 'gerencia/productos/crear_producto.html' 
     success_url = reverse_lazy('producto_index')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        return response
 
 class ProductoUpdateView(UpdateView):
     model = Producto

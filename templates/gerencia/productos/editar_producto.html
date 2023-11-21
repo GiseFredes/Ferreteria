@@ -1,23 +1,14 @@
-<!-- lista_productos.html -->
 {% extends 'gerencia/baseG.html' %}
-
+{% block title %}- Editar Producto{% endblock  %}
 {% block content %}
-  <h2>Lista de Productos</h2>
+  <h2>Editar Producto</h2>
   
-  <ul>
-    {% for producto in productos %}
-      <li>
-        {{ producto.articulo }} - {{ producto.categoria }} - Precio: ${{ producto.precio }} - Marca: {{ producto.marca }} - Stock: {{producto.stock}} - Proveedor: {{producto.proveedor}} - Descripcion: {{producto.descrpcion}}
-        <a href="{% url 'editarProducto' producto.id %}" class="btn btn-warning">Editar</a>
-        <a href="{% url 'eliminarProducto' producto.id %}" class="btn btn-danger">Eliminar</a>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <h2>Agregar Nuevo Producto</h2>
-  <form method="post" action="{% url 'crearProducto' %}">
+  <form method="post" action="{% url 'editarProducto' producto.id %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Guardar Producto</button>
+    <button type="submit">Guardar Cambios</button>
   </form>
+
+  <a href="{% url 'producto_index' %}" class="btn btn-secondary">Volver a la Lista de Productos</a>
 {% endblock %}
+

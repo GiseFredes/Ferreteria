@@ -59,7 +59,7 @@ class Categoria(models.Model):
 
 class Producto(models.Model):
     articulo = models.CharField(verbose_name="Artículo", max_length=50)
-    imagen = models.ImageField(verbose_name="Imagen", max_length=250)
+    imagen = models.ImageField(verbose_name="Imagen", max_length=250, upload_to='img', null=True, blank=True) #upload especifica la carpeta donde encontrar las imagenes
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     precio = models.CharField(verbose_name="Precio", max_length=25)
     marca = models.CharField(verbose_name="Marca", max_length=25)
