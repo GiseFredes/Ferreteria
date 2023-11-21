@@ -1,0 +1,11 @@
+<!-- crear_pedido.html -->
+{% extends 'gerencia/baseG.html' %}
+
+{% block content %}
+  <h2>Crear Pedido</h2>
+  <form method="post" action="{% url 'crear_pedido' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar Pedido</button>
+  </form>
+{% endblock %}

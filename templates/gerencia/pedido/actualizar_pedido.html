@@ -1,0 +1,11 @@
+<!-- actualizar_pedido.html -->
+{% extends 'gerencia/baseG.html' %}
+
+{% block content %}
+  <h2>Actualizar Pedido</h2>
+  <form method="post" action="{% url 'actualizar_pedido' pedido.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar Cambios</button>
+  </form>
+{% endblock %}

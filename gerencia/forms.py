@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Cliente, Producto, Categoria
+from .models import Cliente, Pedido, Producto, Categoria
 
 class PersonaForm(forms.ModelForm):
     nombre = forms.CharField(
@@ -56,9 +56,19 @@ class ClienteForm(PersonaForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ['articulo', 'categoria', 'precio', 'marca', 'stock', 'proveedor', 'descripcion']
+        fields = ['articulo', 'categoria', 'precio', 'marca', 'stock', 'descripcion']
 
 class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categoria
         fields = ['nombre']
+
+
+class PedidoForm(forms.ModelForm):
+    class Meta:
+        model = Pedido
+        fields = ['id', 'cliente', 'total']
+
+
+class DetallePedidoForm(PedidoForm):
+    fields = ['producto_id', 'cantidad', 'subtotal']

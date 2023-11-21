@@ -1,0 +1,13 @@
+<!-- eliminar_pedido.html -->
+{% extends 'gerencia/baseG.html' %}
+
+
+{% block content %}
+  <h2>Eliminar Pedido</h2>
+  <p>¿Está seguro que desea eliminar el pedido "{{ pedido.id }}"?</p>
+  <form method="post" action="{% url 'eliminar_pedido' pedido.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+  </form>
+  <a href="{% url 'lista_pedidos' %}">Cancelar</a>
+{% endblock %}

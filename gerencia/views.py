@@ -2,7 +2,7 @@ from django.shortcuts import render
 from typing import Any
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView  #conjunto de vistas genéricas que son implementaciones comunes de patrones de visualización. Estas vistas permiten realizar operaciones CRUD 
 from django.http import HttpRequest
-from .models import Cliente, Producto, Categoria
+from .models import Cliente, Producto, Categoria, Pedido
 from django.urls import reverse_lazy #Aca utilizamos reverse_lazy porque como estamos consultando en la BDD, solo la llamaremos cuando este todo listo cargado y validado. 
 from .forms import ProductoForm
 
@@ -14,7 +14,7 @@ class ClienteListView(ListView):
     model = Cliente  # Con model debo decirle cual es el modelo del que debo tomar los campos
     context_object_name = 'clientes'
     template_name = 'gerencia/cliente/cliente_listar.html' #Cual es la pagina donde lo va a mostrar o cargar
-    queryset = Cliente.objects.filter(baja = False)
+    queryset = Cliente.objects.filter(baja_cliente= False)
     ordering = ['apellido']
         # esta vista muestra una lista de clientes, inicialmente filtrados para excluir aquellos con baja igual a True, y permite realizar búsquedas adicionales por apellido mediante parámetros GET.
     def get(self, request: HttpRequest, *args:Any, **kwargs:Any):  #Este método se utiliza para manejar las solicitudes GET. En este caso, se está personalizando para filtrar la lista de clientes según el apellido proporcionado en los parámetros de la solicitud.
@@ -91,3 +91,25 @@ class CategoriaDeleteView(DeleteView):
     model = Categoria
     template_name = 'gerencia/categoria/eliminar_categoria.html'
     success_url = reverse_lazy('lista_categorias')
+
+class PedidoCreateView(CreateView):
+    model = Pedido
+    template_name = 'gerencia/pedido/crear_pedido.html'
+    fields = ['id']#cambiar
+    success_url = reverse_lazy('lista_pedidos')
+
+class PedidoListView(ListView):
+    model = Pedido
+    template_name = 'gerencia/pedido/lista_pedidos.html'
+    context_object_name = 'Pedidos'
+    
+class PedidoUpdateView(UpdateView):
+    model = Pedido
+    template_name = 'gerencia/Pedido/actualizar_pedido.html'
+    fields = ['id']
+    success_url = reverse_lazy('lista_pedidos')
+
+class PedidoDeleteView(DeleteView):
+    model = Pedido
+    template_name = 'gerencia/pedido/eliminar_pedido.html'
+    success_url = reverse_lazy('lista_pedidos')
