@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("core.urls")),
     path('gerencia/', include("gerencia.urls")),
+    path('acounts/', include("django.contrib.auth.urls")),
 ]# Añadí esta configuración para que pueda ver las imagenes de los productos
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

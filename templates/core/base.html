@@ -19,13 +19,21 @@
         </div>
         <nav class="header-menu">
             <ul>
-                 <li><a href="{% url 'index' %}">Home</a> </li>
-                 <li><a href="{% url 'nosotros' %}">Nosotros...</a></li>
-                 <li><a href="{% url 'contacto' %}">Contacto</a></li>
-                 <li><a href="{% url 'indexGerencia' %}">Gerencia</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'nosotros' %}">Nosotros...</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'indexGerencia' %}">Gerencia</a></li>
             </ul>
+            <div class="col-md-3">
+                {% if user.is_authenticated %}
+                    <p type="text" style="display: inline" class="">Bienvenido\a, {{ user.username }}.</p>
+                    <a type="button" href="{% url 'logout' %}" class="btn btn-outline-primary me-2">Cerrar Sesión</a>
+                {% else %}
+                    <a type="button" href="{% url 'login' %}" class="btn btn-outline-primary me-2">Iniciar Sesión</a>
+                {% endif %}
+            </div>
         </nav>
-    </header>
+</header> 
     <!--contenido principal-->
     {% comment %} <main>{% block content %}{% endblock content %}
         <section >
